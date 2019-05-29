@@ -32,10 +32,24 @@
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <None Remove="ClientApp\src\components\qrcode-reader\**" />
+    <Content Remove="ClientApp\src\components\qrcode-reader\**" />
+    <None Remove="ClientApp\src\components\Shared\**" />
+    <Content Remove="ClientApp\src\components\Shared\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClientApp\src\components\qrcode-reader\**" />
+    <Compile Remove="ClientApp\src\components\Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\src\components\qrcode-reader\**" />
+    <EmbeddedResource Remove="ClientApp\src\components\Shared\**" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
