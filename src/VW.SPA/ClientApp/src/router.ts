@@ -31,5 +31,5 @@ export default new Router({
             name: 'QR scanner',
             component: () => import(/* webpackChunkName: "QRScanner" */ './views/QRScanner.vue')
         }
-    ],
+    ]
 });

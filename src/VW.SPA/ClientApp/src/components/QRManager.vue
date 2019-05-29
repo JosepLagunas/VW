@@ -9,19 +9,22 @@
 
 <script>
     import {QrcodeStream} from 'vue-qrcode-reader'
+    import {EventsPublisher} from "./shared/bus/EventsPublisher";
 
     export default {
         name: "QRManager",
-        components: {QrcodeStream},
+        components: {QrcodeStream, EventsPublisher},
         methods: {
             onDecode: function (decodedContent) {
-                console.log(decodedContent);
+                console.log("decoded");
+                let eventArgs = {source: this, data: {code: decodedContent}};
+                EventsPublisher.broadcast('codeDecode', eventArgs);
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 
     .qr-decoder-wrapper {
         position: absolute;
@@ -29,21 +32,45 @@
         height: 100%;
     }
 
+    .qr-decoder-wrapper >>> .wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    .qr-decoder-wrapper >>> .inside {
+        position: relative;
+        max-width: 100%;
+        max-height: 100%;
+        height: 100%;
+        width: 100%;
+        z-index: 0
+    }
+
+    .overlay, .tracking-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0
+    }
+
+    .qr-decoder-wrapper >>> .camera, .pause-frame {
+        display: block;
+        object-fit: cover;
+        max-width: 100%;
+        max-height: 100%;
+        height: 100%;
+        width: 100%;
+    }
+
     .qr-decoder-container {
         position: absolute;
-        height: 667px;
-        width: 375px;
-    }
-
-    .qr-decoder-container .inside {
-        height: 100% !important;
-        width: 100% !important;
-    }
-
-    .qr-decoder-container video {
-        height: 100% !important;
-        width: 100% !important;
-        object-fit: cover !important;
+        height: 100%;
+        width: 100%;
     }
 
     .qr-reader-target {
@@ -56,6 +83,7 @@
         right: 0;
         margin: auto;
         border: dashed 4px yellow;
+        border-radius: 20px;
     }
 
 </style>
