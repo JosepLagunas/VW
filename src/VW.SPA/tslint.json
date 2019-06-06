@@ -1,5 +1,5 @@
 {
-  "extends": [
-      "/ClientApp/tslint.json"
-  ]
+    "extends": [
+        "/ClientApp/tslint.json"
+    ]
 }
