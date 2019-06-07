@@ -17,6 +17,8 @@ function test(){
 test
 
 function get_docker_tag(){
+	echo $TRAVIS_BRANCH 
+	echo $TRAVIS_COMMIT
 	if [ $1 == "development" ]; then
 		return $"development-{$2}"
 	else
