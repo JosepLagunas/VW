@@ -6,6 +6,4 @@ dotnet: 2.2
 services: 
     - docker
 script:
-    - ./build.sh        
-after_success:
-    - ./createAndPushDockerImage.sh
+    - ./build.sh
