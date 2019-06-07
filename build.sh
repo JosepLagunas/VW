@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo branch: $TRAVIS_BRANCH
 echo "start restore"
 #dotnet restore ./src/WebPlatform.sln
