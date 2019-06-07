@@ -1,11 +1,28 @@
-language: csharp
-mono: none
 sudo: required
-dist: trusty
-dotnet: 2.2
-services: 
-    - docker
+language: python
+services:
+- docker
+before_install:
+- pip install awscli
+- export PATH=$PATH:$HOME/.local/bin
 script:
-    - ./build.sh        
-after_success:
-    - ./createAndPushDockerImage.sh
+- cd ./src/VW.SPA
+- docker build -t $DOCKER_REPO .
+- cd ../..
+- bash docker_push.sh
+deploy:
+  - provider: script
+    script: bash elasticbeanstalk_deploy.sh
+    skip_cleanup: true
+    on:
+        branch: development
+  - provider: script
+    script: bash elasticbeanstalk_deploy.sh
+    skip_cleanup: true
+    on:
+        branch: staging
+  - provider: script
+    script: bash elasticbeanstalk_deploy.sh
+    skip_cleanup: true
+    on:
+        branch: master
