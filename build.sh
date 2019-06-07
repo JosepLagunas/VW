@@ -1,5 +1,4 @@
 #!/bin/bash
-echo branch: $TRAVIS_BRANCH
 echo "start restore"
 #dotnet restore ./src/WebPlatform.sln
 echo "restore done"
@@ -8,23 +7,37 @@ echo "start build"
 #dotnet build ./src/WebPlatform.sln
 echo "build done"
 
-function test(){
-	local a=25
-    local b=3
-	local c=$((a+b))
-	echo $c
-}
-test
-
 function get_docker_tag(){
-	echo $TRAVIS_BRANCH 
-	echo $TRAVIS_COMMIT
-	if [ $1 == "development" ]; then
-		return $"development-{$2}"
+	if [ $1=="development" ]; then
+		echo "development-$2"
 	else
-		return $"production-{$2}"
+		echo "production-$2"
 	fi	
 }
-dockerTag=get_docker_tag $TRAVIS_BRANCH $TRAVIS_COMMIT
-echo started building docker image for $dockerTag
+
+function clearLogin(){
+	original="$ aws ecr get-login --no-include-email --region eu-west-1 docker login -u AWS -p eyJwYXlsb2FkIjoibWo3VmFyMk9SOWRiUmNVM0daTkcvQlBXYk9DMUorUllKSExrdG9IWEVhNXhpUDMzWkpDbTh4NkltOVJNL1JlblpKMVExZXpvNXAxS3VBRVJxSmdqQjJFajNONUZqTnU5OThmRGo4a0d0YzFxSDhlUWdyRjVIZktxWWVyQjhqdTAvQ0lHMmErcUtDeGd1Q1piWUxzcDVtZDBTd0N6MlF6RStmSWhaaGlVU1VFbXRMWkowQlB1R3ZxL3R5aU54MFJtOEE1cU1vTStNeEppenJxVG1PSzFETTJFelVYN28yZUd3b0Y0a3VLYXhFdWRjYmRmdGtJeklWNTJEeXIzS29uNU1aNllVVSs2c21yLzMrMHN6OVdHOGxPaXRlcEtKVndWMXZ2a0RYNjV0QUwwcmlVQmhoek5vUUZ0UDczS1h5bm45TDFRUUxFdXpweEVQTngwUWFpa29IbERvVHBtd3dFYlBvc2ZsbWljTG9xbVo1eHpLMFBpRkJHYWJqUGc5Y1QyM2VLSzE4Z2FKRy84OUtxK2ZIdzR2S050UGVONDk2L2VoQmwvS1dHUzgxOUd5QlVzOXpqU25YUjlwVEwvV05VbWVvUlVMTks0TU9ObFpyNkcwVXVDTlg3SFo5OEhLNSt1VUhla3FtSkVIWW5hRDlxRW1qeXM4cjFva1dNeHJMNEVSaVJyYWtRVXNSMDFubGZ5VW9nVXlMZzhhRXlrVVFhcmhoaWZ6cnNVbUhQaW1vMmdmWUgwYmI0ZnJUSmp2UktZMDUvblR1VXNuR1B0aWduUmdYbjRlZGhreENIanV0WDRrNkNwYTcvMUZrVjJJMjN6YVdjZjdUT0FiMjUvMDM0VkRVQ3IwcGJPUlp3WkcxYW1wd1E2a0o2dUcrUWpRVDV1Zk5FcG1PT1dsZCtES1Z3SHV3QWVpVjdWTEZYVVhySVR2THV0VEt3azBWcGFTNDRPLzNJWnJtaG5QY3RLMFdGQ0pBbDZYaVBmRWNyTUc0WTNEYkdCdXhWSTR4M3oyUWQzVnBWZVp1THFMTmtwdi9SOXNBYWJxR3hEUllhaEh1bUhFVGNodWtLamNkUDIxbWdlUjVHWDNiUlM1SjRpZHgxV0YraS9hN2NOVGVSSGNTZmg2WWJPc2ZoNFQweFlnLzJxMzZPczJuTEpRdGhoN2ttekNRRWY1TjV1RkpBTVBBN2lIT1VUY3c3ZGUwNzZ6RXM2RXQ1ZkJrWit5RHBma3g4bFdTQjE1YVF2cTZobWRlWjEyQW9mYXVrQyt5dGlDZHozd0o5TFFjSmxJYitscHZPWUhNdlpUYXhYczdqUEV2YVJpLzlLd1lxYTgxQ01wS2NXRnMrYlUvSm81bFlSTEtTZ0w4QUliNTF0RGJka0V0dStkZWY1WWNHTjBicUtkZkhCQ1g4bEQ1T3RKKzhwcGtwL2dpMGQxbWhNTnAwYUpqY3RjM2s0RUZoay8vTmpDdzJXRXhrS2s2NjQ2bjQ5S0E9PSIsImRhdGFrZXkiOiJBUUVCQUhoK2RTK0JsTnUwTnhuWHdvd2JJTHMxMTV5amQrTE5BWmhCTFpzdW5PeGszQUFBQUg0d2ZBWUpLb1pJaHZjTkFRY0dvRzh3YlFJQkFEQm9CZ2txaGtpRzl3MEJCd0V3SGdZSllJWklBV1VEQkFFdU1CRUVESG96aEhZT1ZrU2wvbmNzV3dJQkVJQTdtUEJxQi9rVFRRMnBHMGpTZmdpUm9ZS3J6SW9kSWJ3c3RabUpaejQyWUpYbG1zZ1E5ZlU2Q3l4anY2SnR6NlRHeUMwTGh6MXdBTmpqY0xBPSIsInZlcnNpb24iOiIyIiwidHlwZSI6IkRBVEFfS0VZIiwiZXhwaXJhdGlvbiI6MTU1OTk4MDUxNX0= https://947115102978.dkr.ecr.eu-west-1.amazonaws.com"
+	schema="https://"
+	echo "${original//$schema}" 
+
+}
+
+function buidDockerImage() {
+	dockerTag=$(get_docker_tag $TRAVIS_BRANCH $TRAVIS_COMMIT)
+	cd ./src/VW.SPA/
+	schema="https://"
+	original=$(aws ecr get-login --no-include-email --region eu-west-1)
+	r="${original//$schema}"
+	eval $r
+	docker build -t webapp .
+	docker tag webapp:latest 947115102978.dkr.ecr.eu-west-1.amazonaws.com/webapp-images:$dockerTag
+	docker push 947115102978.dkr.ecr.eu-west-1.amazonaws.com/webapp-images:$dockerTag	
+	cd ../..	
+}
+
+buidDockerImage
+
+
+
+
 
