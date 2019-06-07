@@ -2,6 +2,10 @@
     <div class="qr-decoder-container">
         <div class="qr-decoder-wrapper">
             <qrcode-stream @decode="onDecode"></qrcode-stream>
+            <v-btn fab dark large color="red" class="skip-scanner-button"
+                   @click="handleSkipScanning">
+                <v-icon dark>videocam_off</v-icon>
+            </v-btn>
         </div>
         <div class="qr-reader-target"></div>
     </div>
@@ -19,7 +23,13 @@
                 console.log("decoded");
                 let eventArgs = {source: this, data: {code: decodedContent}};
                 EventsPublisher.broadcast('codeDecode', eventArgs);
+            },
+            handleSkipScanning: function (e) {
+                this.$router.push({path: '/home'});
             }
+        },
+        created() {
+            console.log("qr-scanner-created");
         }
     }
 </script>
@@ -84,6 +94,12 @@
         margin: auto;
         border: dashed 4px yellow;
         border-radius: 20px;
+    }
+
+    .skip-scanner-button {
+        position: absolute;
+        top: 5%;
+        right: 5%;
     }
 
 </style>
