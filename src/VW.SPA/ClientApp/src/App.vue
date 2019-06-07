@@ -39,7 +39,7 @@
     </v-app>
 </template>
 
-<script lang="ts">
+<script language="JavaScript1.5">
     import router from "@/router";
     import {EventsSubscriber} from "@/components/shared/bus/EventsSubscriber";
     import {EventsPublisher} from "@/components/shared/bus/EventsPublisher";
