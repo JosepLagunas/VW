@@ -1,17 +1,22 @@
-language: php
-mono: none
 sudo: required
-dist: xenial
-services: 
-    - docker
+language: python
+services:
+- docker
+env:
+  global:
+  - DOCKER_REPO=webapp-images
+  - EB_REGION="eu-west-1"
+before_install:
+- pip install awscli
+- export PATH=$PATH:$HOME/.local/bin
 script:
-  - echo "no tests!" # put your normal testing scripts here
-
-after_success:
-  - docker --version  # document the version travis is using
-  - pip install --user awscli # install aws cli w/o sudo
-  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
-  - eval $(aws ecr get-login --region us-east-1) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-  - docker build -t webapp .
-  - docker tag webapp:latest 947115102978.dkr.ecr.us-east-1.amazonaws.com/webapp-images:development-$TRAVIS_COMMIT
-  - docker push 947115102978.dkr.ecr.us-east-1.amazonaws.com/webapp-images:development-$TRAVIS_COMMIT
+- cd ./src/VW.SPA
+- docker build -t $DOCKER_REPO .
+- cd ../.. 
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master
+  on:
+    branch: development
