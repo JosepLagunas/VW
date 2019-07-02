@@ -1,116 +1,75 @@
 <template>
-    <v-container fluid>
-        <v-layout column align-center>
-            <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
-            <HelloWorld quote="Welcome to Your ASP.NET Core + Vue.js + TypeScript App"
-                        author="brought to you by Software Ateliers"/>
-        </v-layout>
-        <v-slide-y-transition mode="out-in">
-            <v-layout column>
-                <h1 class="headline">Hello, world!</h1>
-                <p>Welcome to your new single-page application, built with: </p>
-                <ul>
-                    <li>
-                        <a href="https://get.asp.net" target="_blank"> ASP.NET Core</a> and
-                        <a href="https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx"
-                           target="_blank">C#</a> for cross-platform server-side API code
-                    </li>
-                    <li>
-                        <a href="https://vuejs.org" target="_blank"> Vue.js</a> for client-side code
-                    </li>
-                    <li>
-                        <a href="https://cli.vuejs.org" target="_blank"> Vue CLI</a> for building,
-                        bundling and adding or removing vue plugins
-                    </li>
-                    <li>
-                        <a href="https://webpack.js.org" target="_blank">Webpack</a> internally used
-                        by Vue CLI
-                    </li>
-                    <li>
-                        <a href="https://vuetifyjs.com" target="_blank">Vuetify</a> for layout and
-                        styling
-                    </li>
-                </ul>
+    <v-app>
 
-                <h3 class="headline mt-3">To help you get started, we've also set up:</h3>
-                <ul>
-                    <li>
-                        <strong>Client-side navigation</strong>. For example, click <em>Counter</em>
-                        then <em>Back</em> to return here.
-                    </li>
-                    <li>
-                        <strong>Development server integration</strong>. In development mode, the
-                        development server from
-                        <code>vue-cli-service</code> runs in the background automatically, so your
-                        client-side resources are dynamically built on
-                        demand and the page refreshes when you modify any file.
-                    </li>
-                    <li>
-                        <strong>Efficient production builds</strong>. In production mode,
-                        development-time features are disabled, and the
-                        <code>webpack</code> build tool produces minified static CSS and JavaScript
-                        files.
-                    </li>
-                </ul>
+        <v-navigation-drawer v-if="!isFullScreenRequired" persistent :mini-variant="miniVariant"
+                             :clipped="clipped"
+                             v-model="drawer" enable-resize-watcher fixed app>
+            <v-list>
+                <v-list-tile value="true" v-for="(item, i) in items" :key="i" :to="item.link">
+                    <v-list-tile-action>
+                        <v-icon v-html="item.icon"></v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title v-text="item.title"></v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+        </v-navigation-drawer>
 
-                <h3 class="headline mt-3">Integrated Vue plugins:</h3>
-                <ul>
-                    <li>
-                        <a href="https://vuejs.org" target="_blank"> Vue.js</a> - reactive,
-                        component-oriented view layer for modern web interfaces.
-                    </li>
-                    <li>
-                        <a href="https://vuetifyjs.com" target="_blank">Vuetify</a> - a reusable
-                        semantic component framework for Vue.js.
-                    </li>
-                    <li>
-                        <a href="https://github.com/vuejs/vue-class-component#readme"
-                           target="_blank">Class Component</a> - ES201X/Typescript class decorator
-                        for Vue components.
-                    </li>
-                    <li>
-                        <a href="https://github.com/kaorun343/vue-property-decorator#readme"
-                           target="_blank">Property Decorator</a> - property decorators for Vue
-                        components
-                    </li>
-                    <li>
-                        <a href="https://github.com/vuejs/vue-router#readme"
-                           target="_blank">Router</a> - official router for Vue.js 2
-                    </li>
-                    <li>
-                        <a href="https://github.com/vuejs/vuex#readme" target="_blank">Vuex</a> -
-                        state management for Vue.js
-                    </li>
-                    <li>
-                        <a href="https://github.com/yyx990803/register-service-worker#readme"
-                           target="_blank">Register Service Worker</a> - script for registering
-                        service
-                        worker with hooks for common events to simplify PWA development.
-                    </li>
-                </ul>
-            </v-layout>
-        </v-slide-y-transition>
-    </v-container>
+        <v-toolbar v-if="!isFullScreenRequired" app :clipped-left="clipped">
+            <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+            <v-btn icon @click.stop="miniVariant = !miniVariant">
+                <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
+            </v-btn>
+            <v-btn icon @click.stop="clipped = !clipped">
+                <v-icon>web</v-icon>
+            </v-btn>
+            <v-toolbar-title v-text="title"></v-toolbar-title>
+            <v-spacer></v-spacer>
+        </v-toolbar>
+
+
+        <router-view ref="routerView" class="views-container"/>
+        
+        <v-footer v-if="!isFullScreenRequired" app>
+            <span>&nbsp;VW Platform&nbsp;&copy;&nbsp;2019</span>
+        </v-footer>
+
+    </v-app>
 </template>
 
-<script lang="ts">
-    import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script>
 
     export default {
         name: "home",
-        components: {
-            HelloWorld
-        },
+        components: {},
         data: function () {
             return {
-                initialLoad: true
+                clipped: false,
+                drawer: true,
+                miniVariant: true,
+                right: true,
+                title: 'VW platform',
+                items: [
+                    {title: 'Counter', icon: 'touch_app', link: '/home/counter'},
+                    {title: 'Fetch data', icon: 'get_app', link: '/home/fetch-data'},
+                    {title: 'QR scanner', icon: 'fas fa-qrcode', link: '/home/qr-scanner'},
+                    {title: 'Sign out', icon: 'power_settings_new', link: '/home/log-out'}
+                ]
             };
         },
-        created: function () {
-            
+        computed: {
+            isFullScreenRequired(){
+                console.log(this.$route.path);
+                return this.$route.path === '/home/qr-scanner';
+            }
         },
-        beforeDestroy: function () {
-           
-        }
+        methods: {}
     }
 </script>
+
+<style>
+    .views-container {
+        background: radial-gradient(#40404b, #111118) rgba(34,34,40,0.94);
+    }
+</style>
