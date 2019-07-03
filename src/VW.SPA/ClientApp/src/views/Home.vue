@@ -51,8 +51,10 @@
                 right: true,
                 title: 'VW platform',
                 items: [
-                    {title: 'Counter', icon: 'touch_app', link: '/home/counter'},
-                    {title: 'Fetch data', icon: 'get_app', link: '/home/fetch-data'},
+                    //{title: 'Counter', icon: 'touch_app', link: '/home/counter'},
+                    //{title: 'Fetch data', icon: 'get_app', link: '/home/fetch-data'},
+                    {title: 'Documentation', icon: 'fas fa-file-video', link: '/home/documentation-search'},                    
+                    {title: 'Content management', icon: 'fas fa-edit', link: '/home/content-creator'},                   
                     {title: 'QR scanner', icon: 'fas fa-qrcode', link: '/home/qr-scanner'},
                     {title: 'Sign out', icon: 'power_settings_new', link: '/home/log-out'}
                 ]

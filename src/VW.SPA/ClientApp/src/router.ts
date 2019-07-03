@@ -31,10 +31,20 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "fetch-data" */ './views/FetchData.vue'),
                 },
                 {
+                    path: 'content-creator',
+                    name: 'content-creator',
+                    component: () => import('./views/ContentCreator.vue')
+                },
+                {
                     path: 'qr-scanner',
                     name: 'qr-scanner',
                     component: () => import('./views/QRScanner.vue'),
                     meta: {requiresAuth: false}
+                },
+                {
+                    path: 'documentation-search',
+                    name: 'documentation-search',
+                    component: () => import('./views/DocumentationSearch.vue')                    
                 },
                 {
                     path: 'log-out',

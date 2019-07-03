@@ -8,8 +8,12 @@
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^12.2.0",
+        "@ckeditor/ckeditor5-build-decoupled-document": "^12.2.0",
+        "@ckeditor/ckeditor5-vue": "^1.0.0-beta.2",
         "register-service-worker": "^1.6.2",
         "vue": "^2.6.10",
+        "vue-ckeditor5": "^0.4.1",
         "vue-class-component": "^7.0.2",
         "vue-property-decorator": "^8.1.0",
         "vue-qrcode-reader": "^2.0.1",
