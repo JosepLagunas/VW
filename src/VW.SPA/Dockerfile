@@ -1,4 +1,6 @@
 FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+WORKDIR /.ebextensions
+COPY .ebextensions/https-instance.config .
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
