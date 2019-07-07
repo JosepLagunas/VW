@@ -1,4 +1,9 @@
 FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+WORKDIR /.ebextensions
+COPY .ebextensions/https-instance.config .
+WORKDIR /app
+WORKDIR /app/.ebextensions
+COPY /.ebextensions/https-instance.config ./.ebextensions/https-instance.config
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -17,8 +22,6 @@ WORKDIR /src
 COPY ["./VWP.csproj", "VWSPA/"]
 RUN dotnet restore "VWSPA/VWP.csproj"
 COPY . .
-#RUN ls .
-#WORKDIR /src/VWSPA
 RUN dotnet build "VWP.csproj" -c Release -o /app
 FROM build AS publish
 RUN dotnet publish "VWP.csproj" -c Release -o /app
