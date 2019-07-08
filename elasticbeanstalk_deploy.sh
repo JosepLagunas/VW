@@ -40,7 +40,7 @@ CONTENT="{\t\n
   \t},\n
   \t\"Ports\": [\n
     \t\t{\n
-      \t\t\"ContainerPort\": \"80\"\n
+      \t\t\"ContainerPort\": \"443\"\n
     \t\t}\n
   \t]\n
 }"
