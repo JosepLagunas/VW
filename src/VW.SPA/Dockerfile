@@ -1,9 +1,9 @@
 FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
 WORKDIR /.ebextensions
-COPY .ebextensions/https-instance.config .
+COPY .ebextensions/https-instance.config /.ebextensions
 WORKDIR /app
 WORKDIR /app/.ebextensions
-COPY /.ebextensions/https-instance.config ./.ebextensions/https-instance.config
+COPY .ebextensions/https-instance.config /app/.ebextensions
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -29,5 +29,15 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
 COPY --from=build-node /ClientApp ./ClientApp
+
+RUN echo "ARREL"
+RUN ls -a /
+RUN echo "Contingut .ebextensions arrel"
+RUN ls -a /.ebextensions
+RUN echo *****************************************
+RUN echo "Contingut /app"
+RUN ls -a /app
+RUN echo "Contingut /app/.ebextensions"
+RUN ls -a /app/.ebextensions
 
 ENTRYPOINT ["dotnet", "VWP.dll"]
