@@ -117,13 +117,11 @@ namespace VWP
 
         private static bool IsUserLogged(HttpContext context)
         {
-            return true;
             return context.User.TryGetAccount(context, out _);
         }
 
         private static bool IsNonValidPath(PathString requestPath)
         {
-            return false;
             if (!requestPath.HasValue) return true;
             if (ValidPaths.Contains(requestPath.Value)) return false;
             var splitUrl = requestPath.Value.Split("/");
@@ -134,7 +132,6 @@ namespace VWP
 
         private static bool IsValidationRequired(PathString requestPath)
         {
-            return false;
             if (!requestPath.HasValue) return false;
             if (AuthorizationRequiredPaths.Contains(requestPath.Value)) return true;
             var splitUrl = requestPath.Value.Split("/");
