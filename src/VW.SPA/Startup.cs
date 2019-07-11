@@ -104,7 +104,7 @@ namespace VWP
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
+                if (env.IsDevelopment() && false)
                 {
                     // run npm process with client app
                     spa.UseVueCli(npmScript: "serve", port: 8080, regex: "Compiled ");
