@@ -47,6 +47,16 @@ namespace VWP
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory loggerFactory)
         {
+            app.Use((context, next) =>
+            {
+                if (context.Request.Headers["X-Forwarded-Proto"] == "https")
+                {
+                    context.Request.Scheme = "https";
+                }
+
+                return next();
+            });
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -104,7 +114,7 @@ namespace VWP
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment() && false)
+                if (env.IsDevelopment())
                 {
                     // run npm process with client app
                     spa.UseVueCli(npmScript: "serve", port: 8080, regex: "Compiled ");
