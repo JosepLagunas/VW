@@ -52,6 +52,7 @@ namespace VWP
                 if (context.Request.Headers["X-Forwarded-Proto"] == "https")
                 {
                     context.Request.Scheme = "https";
+                    context.Request.Headers.Add("my-header", "hola");
                 }
 
                 return next();
