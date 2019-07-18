@@ -136,7 +136,7 @@ namespace VWP
             if (!requestPath.HasValue) return true;
             if (ValidPaths.Contains(requestPath.Value)) return false;
             var splitUrl = requestPath.Value.Split("/");
-
+                                       
             var firstPathPart = $"/{splitUrl[1].ToLower()}";
             return !ValidPaths.Contains(firstPathPart);
         }
