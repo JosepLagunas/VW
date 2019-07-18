@@ -2,6 +2,12 @@ sudo: required
 language: python
 services:
 - docker
+# safelist
+branches:
+  only:
+  - master
+  - staging
+  - development
 before_install:
 - pip install awscli
 - export PATH=$PATH:$HOME/.local/bin

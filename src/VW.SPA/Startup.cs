@@ -47,6 +47,17 @@ namespace VWP
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory loggerFactory)
         {
+            app.Use((context, next) =>
+            {
+                if (context.Request.Headers["X-Forwarded-Proto"] == "https")
+                {
+                    context.Request.Scheme = "https";
+                    context.Request.Headers.Add("my-header", "hola");
+                }
+
+                return next();
+            });
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -125,7 +136,7 @@ namespace VWP
             if (!requestPath.HasValue) return true;
             if (ValidPaths.Contains(requestPath.Value)) return false;
             var splitUrl = requestPath.Value.Split("/");
-
+                                       
             var firstPathPart = $"/{splitUrl[1].ToLower()}";
             return !ValidPaths.Contains(firstPathPart);
         }
