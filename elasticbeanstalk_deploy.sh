@@ -45,21 +45,43 @@ CONTENT="{\t\n
   \t]\n
 }"
 
-FILENAME="dockerrun.aws.${ELB_VERSION}.json"
+SECTION_LINE_SEPARATOR="\n\n\n"
+FILENAME=Dockerrun.aws.json
+ZIP_DEPLOY_PACKAGE_NAME=deploy-$VERSION.zip
+echo -e $SECTION_LINE_SEPARATOR
+echo Creating Dockerrun.aws.json file
+echo 
+echo -e $CONTENT > $FILENAME
+cat ./$FILENAME
+echo -e $SECTION_LINE_SEPARATOR
 
-echo "Creating deployment file"
-echo cat ./${FILENAME}
-echo -e $CONTENT > ${FILENAME}
-echo "Uploading deployment file to S3 bucket: ${S3_BUCKET}"
-echo aws s3 cp "${FILENAME}" s3://"${S3_BUCKET}" --region "${AWS_REGION}"
-aws s3 cp "${FILENAME}" s3://"${S3_BUCKET}" --region "${AWS_REGION}"
-echo "Deploying ${VERSION} to ${ELB_ENVIRONMENT}"
-echo "Creating application version"
-echo aws elasticbeanstalk create-application-version --application-name "${APPLICATION_NAME}" --version-label "${ELB_VERSION}" --source-bundle S3Bucket="${S3_BUCKET}",S3Key="${FILENAME}" --region "${AWS_REGION}"
-aws elasticbeanstalk create-application-version --application-name "${APPLICATION_NAME}" --version-label "${ELB_VERSION}" --source-bundle S3Bucket="${S3_BUCKET}",S3Key="${FILENAME}" --region "${AWS_REGION}"
-echo "Updating ${ELB_ENVIRONMENT} environment"
-echo aws elasticbeanstalk update-environment --application-name "${APPLICATION_NAME}" --environment-name "${ELB_ENVIRONMENT}" --version-label "${ELB_VERSION}" --region "${AWS_REGION}"
-aws elasticbeanstalk update-environment --application-name "${APPLICATION_NAME}" --environment-name "${ELB_ENVIRONMENT}" --version-label "${ELB_VERSION}" --region "${AWS_REGION}"
+echo Creating deployment zip folder
+echo 
+echo zip ./$ZIP_DEPLOY_PACKAGE_NAME ./.ebextensions/*.config ./$FILENAME
+zip ./$ZIP_DEPLOY_PACKAGE_NAME ./.ebextensions/*.config ./$FILENAME
+echo -e $SECTION_LINE_SEPARATOR
+
+echo "Uploading deployment ZIP file to S3 bucket: ${S3_BUCKET}"
+echo 
+echo aws s3 cp $ZIP_DEPLOY_PACKAGE_NAME s3://$S3_BUCKET --region $AWS_REGION
+aws s3 cp $ZIP_DEPLOY_PACKAGE_NAME s3://$S3_BUCKET --region $AWS_REGION
+echo -e $SECTION_LINE_SEPARATOR
+
+echo Deploying $VERSION to $ELB_ENVIRONMENT
+echo 
+echo Creating application version
+echo aws elasticbeanstalk create-application-version --application-name $APPLICATION_NAME --version-label $ELB_VERSION --source-bundle S3Bucket=$S3_BUCKET,S3Key=$ZIP_DEPLOY_PACKAGE_NAME --region $AWS_REGION
+aws elasticbeanstalk create-application-version --application-name $APPLICATION_NAME --version-label $ELB_VERSION --source-bundle S3Bucket=$S3_BUCKET,S3Key=$ZIP_DEPLOY_PACKAGE_NAME --region $AWS_REGION
+echo -e $SECTION_LINE_SEPARATOR
+
+echo Updating $ELB_ENVIRONMENT environment
+echo 
+echo aws elasticbeanstalk update-environment --application-name $APPLICATION_NAME --environment-name $ELB_ENVIRONMENT --version-label $ELB_VERSION --region $AWS_REGION
+aws elasticbeanstalk update-environment --application-name $APPLICATION_NAME --environment-name $ELB_ENVIRONMENT --version-label $ELB_VERSION --region $AWS_REGION
+echo -e $SECTION_LINE_SEPARATOR
+
 echo cleaning temporary files...
-rm "${FILENAME}"
-echo "done."
+rm $FILENAME
+rm ./$ZIP_DEPLOY_PACKAGE_NAME
+echo 
+echo done.
