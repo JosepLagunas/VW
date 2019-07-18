@@ -1,17 +1,5 @@
 #!/bin/bash -e
 
-#AWS_REGION="eu-west-1"
-#AWS_ACCOUNT_ID="AKIA5ZBDVSMBDSOXPCXG"
-#AWS_SECRET_ID="Ykv/0YdiIgVddntbeQqdJpX7Qk/FccjglvUom865"
-#DOCKER_REPO="webapp-images"
-#TRAVIS_TAG=""
-#TRAVIS_BRANCH="development"
-#TRAVIS_BUILD_NUMBER="1"
-#TRAVIS_COMMIT="4123fe4"
-#ELB_DEV_ENVIRONMENT="LaklpPlatform-env"
-#S3_BUCKET="webplatform-ci-cd"
-#APPLICATION_NAME="laklp-platform"
-
 REGISTRY_URL=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 SOURCE_IMAGE="${DOCKER_REPO}"
 # using it as there will be 2 versions published
