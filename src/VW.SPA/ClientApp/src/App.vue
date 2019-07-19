@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <v-content v-if="!isRootView">
+        <v-content v-if="!isRootView" style="height: 40%;">
             <router-view>
 
             </router-view>
@@ -164,4 +164,5 @@
             transform: scale(1) rotate(720deg);
         }
     }
+    
 </style>

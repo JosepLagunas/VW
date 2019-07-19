@@ -59,7 +59,7 @@ public class AccountController : Controller
 
     [Route("login/success")]
     [Authorize]
-    public async Task LoginSuccess()
+    public void LoginSuccess()
     {
         Response.Redirect("/home");
     }
