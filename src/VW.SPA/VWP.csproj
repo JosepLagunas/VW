@@ -18,6 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.3.100.52" />
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.102.37" />
+    <PackageReference Include="AWSSDK.CognitoSync" Version="3.3.100.52" />
+    <PackageReference Include="AWSSDK.Extensions.CognitoAuthentication" Version="0.9.4" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.104.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.2.0" />

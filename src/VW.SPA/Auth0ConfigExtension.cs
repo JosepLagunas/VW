@@ -33,6 +33,7 @@ namespace VWP
                 .AddCookie()
                 .AddOpenIdConnect("Auth0", options =>
                 {
+                    options.SaveTokens = true;
                     // Set the authority to your Auth0 domain
                     options.Authority = $"https://{domain}";
 
