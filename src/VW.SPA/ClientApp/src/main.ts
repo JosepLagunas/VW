@@ -2,11 +2,11 @@ import '@babel/polyfill';
 import Vue from 'vue';
 import './plugins/axios';
 import './plugins/vuetify';
+import AWS from 'aws-amplify';
 import App from './App.vue';
 import router from './router';
 import store from '@/store/index';
 import './registerServiceWorker';
-import Axios from "axios";
 
 Vue.config.productionTip = false;
 

@@ -1,15 +1,43 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using VWP.Models.Auth0;
+
 
 namespace VWP.Controllers
 {
     public static class UserExtensions
     {
+        public static async Task<string> GetId_TokenAsync(this ClaimsPrincipal user, HttpContext
+            httpContext)
+        {
+            return await httpContext.GetTokenAsync("id_token");
+        }
+
+        public static async Task<string> GetAccess_TokenAsync(this ClaimsPrincipal user, HttpContext
+            httpContext)
+        {
+            return await httpContext.GetTokenAsync("access_token");
+        }
+
+        public static async Task<DateTime> GetTokenExpirationAsync(this ClaimsPrincipal user, HttpContext
+            httpContext)
+        {
+            // if you need to check the Access Token expiration time, use this value
+            // provided on the authorization response and stored.
+            // do not attempt to inspect/decode the access token
+            return DateTime.Parse(
+                await httpContext.GetTokenAsync("expires_at"),
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind);
+        }
+
         public static bool TryGetAccount(this ClaimsPrincipal user, HttpContext httpContext,
             out Auth0Account auth0Account)
         {
