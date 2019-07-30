@@ -42,20 +42,17 @@ namespace VWP.Controllers
             var idToken = await User.GetId_TokenAsync(HttpContext);
             var accessTokenExpiresAt = await User.GetTokenExpirationAsync(HttpContext);
 
-            var credentials = new CognitoAWSCredentials("947115102978",
+            var credentials = new CognitoAWSCredentials(
                 "eu-west-1:36610218-b0b9-4906-ab23-00f6f1144103",
-                "arn:aws:iam::947115102978:role/Cognito_Auth0_laklpAuth_Role",
-                "arn:aws:iam::947115102978:role/Cognito_Auth0_laklpUnauth_Role",
                 RegionEndpoint.EUWest1
             );
 
-            //credentials.AddLogin("dev-zqmqcd7w.eu.auth0.com", idToken);
+            credentials.AddLogin("dev-zqmqcd7w.eu.auth0.com", idToken);
 
             var s3Client = new AmazonS3Client(credentials, RegionEndpoint.EUWest1);
-            //var s3Client = new AmazonS3Client("AKIA5ZBDVSMBGSMQROHJ", "OHChb0GRfKZoq7/4zXgxbh84fuF/EBFcTbXxRctl", RegionEndpoint.EUWest1);
-
+            
             var stream =
-                new FileStream(@"C:\Users\josep\Documents\testImage.jpg", FileMode.Open);
+                new FileStream(@"C:\Users\JosepLagunas\Pictures\Screenshots\Captura de pantalla (2).png", FileMode.Open);
 
             var putRequest = new PutObjectRequest
             {
@@ -66,7 +63,7 @@ namespace VWP.Controllers
 
             try
             {
-                var response2 = s3Client.PutObjectAsync(putRequest).Result;
+                var response2 = await s3Client.PutObjectAsync(putRequest);
                 
             }
             catch (AggregateException e)

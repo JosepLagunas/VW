@@ -25,7 +25,6 @@ let S3Facade = {
     },
     deleteFile: (folder, fileName) => {
         let folderKey = encodeURIComponent(folder) + '/';
-
         let key = folderKey + fileName;
 
         return new Promise((resolve, reject) => {

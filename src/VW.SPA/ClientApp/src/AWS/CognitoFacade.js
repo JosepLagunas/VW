@@ -35,7 +35,7 @@ let CognitoFacade = {
                 });
             });
         }
-
+        
         return new Promise((resolve, reject) => {
             let req = new XMLHttpRequest();
             req.open('GET', '/account/tokens', true);
