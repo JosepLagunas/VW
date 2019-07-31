@@ -30,15 +30,17 @@
 
 
         <router-view ref="routerView" class="views-container"/>
-        
+
         <v-footer v-if="!isFullScreenRequired" app>
             <span>&nbsp;VW Platform&nbsp;&copy;&nbsp;2019</span>
         </v-footer>
-
+        <input type="file" id="file-uploader" style="height: 0; width:0;"/>
     </v-app>
 </template>
 
 <script>
+
+    import {CognitoFacade} from "../AWS/CognitoFacade";
 
     export default {
         name: "home",
@@ -51,7 +53,7 @@
                 right: true,
                 title: 'VW platform',
                 items: [
-                    {title: 'Content creator', icon: 'far fa-edit', link: '/home/content-creator'},
+                    {title: 'Counter', icon: 'touch_app', link: '/home/counter'},
                     {title: 'Fetch data', icon: 'get_app', link: '/home/fetch-data'},
                     {title: 'QR scanner', icon: 'fas fa-qrcode', link: '/home/qr-scanner'},
                     {title: 'Sign out', icon: 'power_settings_new', link: '/home/log-out'}
@@ -59,18 +61,22 @@
             };
         },
         computed: {
-            isFullScreenRequired(){
+            isFullScreenRequired() {
                 console.log(this.$route.path);
                 return this.$route.path === '/home/qr-scanner';
             }
         },
-        methods: {}
+        methods: {},
+        created() {
+            CognitoFacade.AuthenticateUserWithCognito()
+                .then(data => console.log(`cognito:${data}`))
+                .catch(err => console.log(`cognito-error:${err}`));
+        }
     }
 </script>
-l
+
 <style>
     .views-container {
-        
-        
+        background: radial-gradient(#40404b, #111118) rgba(34, 34, 40, 0.94);
     }
 </style>
