@@ -1,7 +1,8 @@
 let AWS = require('aws-sdk');
+let bucket = 'webplatform-documents';
 
 let S3Facade = {
-    uploadFile: (folder, fileName, content) => {
+    uploadFile: (folder, fileName, content, notifyProgressCallback) => {
         let file = content;
         let folderKey = encodeURIComponent(folder) + '/';
 
@@ -13,13 +14,22 @@ let S3Facade = {
             client.upload({
                 Key: key,
                 Body: content,
-                Bucket: 'webplatform-documents'
+                Bucket: bucket
             }, function (err, data) {
                 if (err) {
                     reject('There was an error uploading your file: ', err.message);
                     return;
                 }
                 resolve('success');
+            }).on('httpUploadProgress', (evt) => {
+                if (!!notifyProgressCallback) {
+                    let percentage = Math.floor(evt.loaded * 100 / evt.total);
+                    notifyProgressCallback({
+                        percentage: percentage,
+                        loaded: evt.loaded,
+                        total: evt.total
+                    });
+                }
             });
         });
     },
@@ -31,7 +41,7 @@ let S3Facade = {
             let client = new AWS.S3();
             client.deleteObject({
                     Key: key,
-                    Bucket: 'webplatform-documents'
+                    Bucket: bucket
                 },
                 function (err, data) {
                     if (err) {
@@ -45,7 +55,7 @@ let S3Facade = {
     },
     listAllFiles: () => {
         let params = {
-            Bucket: 'webplatform-documents',
+            Bucket: bucket,
             Prefix: ''  // Can be your folder name
         };
 
