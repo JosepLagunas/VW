@@ -53,7 +53,7 @@
                 right: true,
                 title: 'VW platform',
                 items: [
-                    {title: 'Counter', icon: 'touch_app', link: '/home/counter'},
+                    {title: 'Content creator', icon: 'far fa-edit', link: '/home/content-creator'},
                     {title: 'Fetch data', icon: 'get_app', link: '/home/fetch-data'},
                     {title: 'QR scanner', icon: 'fas fa-qrcode', link: '/home/qr-scanner'},
                     {title: 'Sign out', icon: 'power_settings_new', link: '/home/log-out'}
@@ -77,6 +77,6 @@
 
 <style>
     .views-container {
-        background: radial-gradient(#40404b, #111118) rgba(34, 34, 40, 0.94);
+        
     }
 </style>
