@@ -1,11 +1,11 @@
 #!/bin/bash
 echo branch: $TRAVIS_BRANCH
 echo "start restore"
-#dotnet restore ./src/WebPlatform.sln
+#dotnet restore ./src/Laklp.Platform.sln
 echo "restore done"
 
 echo "start build"
-#dotnet build ./src/WebPlatform.sln
+#dotnet build ./src/Laklp.Platform.sln
 echo "build done"
 
 function test(){

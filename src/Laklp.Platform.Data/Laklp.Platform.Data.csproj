@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <AssemblyName>Laklp.Platform.Data</AssemblyName>
+        <RootNamespace>Laklp.Platform.Data</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Repositories" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="appsettings.development.json">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>
