@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace Laklp.Models
+namespace Laklp.Security
 {
     public static class UserExtensions
     {

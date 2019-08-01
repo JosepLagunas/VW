@@ -7,7 +7,7 @@ using Amazon;
 using Amazon.CognitoIdentity;
 using Amazon.S3;
 using Amazon.S3.Model;
-using Laklp.Models;
+using Laklp.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
