@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Laklp.Models;
 using Laklp.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

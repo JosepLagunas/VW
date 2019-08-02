@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Laklp.Models;
+using Laklp.Security;
 using Laklp.Security.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

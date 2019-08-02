@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Laklp.Platform.Data.Context
 {
-    public class LaklpDbContextFactory : IDesignTimeDbContextFactory<LaklpDbContext>
+    internal class LaklpDbContextFactory : IDesignTimeDbContextFactory<LaklpDbContext>
     {
         public LaklpDbContext CreateDbContext(string[] args)
         {

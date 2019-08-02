@@ -1,4 +1,4 @@
-using Laklp.Models;
+using Laklp.Security;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Laklp.Controllers
