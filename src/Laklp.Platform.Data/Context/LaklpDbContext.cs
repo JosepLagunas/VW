@@ -7,7 +7,7 @@ using Microsoft.SqlServer.Server;
 
 namespace Laklp.Platform.Data.Context
 {
-    internal class LaklpDbContext : DbContext
+    public class LaklpDbContext : DbContext
     {
         public DbSet<DocumentaryResource> DocumentaryResources { get; set; }
         public DbSet<Company> Companies { get; set; }

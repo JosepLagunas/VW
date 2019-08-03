@@ -56,6 +56,7 @@ namespace Laklp.Controllers
         [Authorize]
         public void LoginSuccess()
         {
+        
             Response.Redirect("/home");
         }
     }

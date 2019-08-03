@@ -19,21 +19,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
     <PackageReference Include="AWSSDK.CognitoIdentity" Version="3.3.100.52" />
     <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.3.102.37" />
     <PackageReference Include="AWSSDK.CognitoSync" Version="3.3.100.52" />
     <PackageReference Include="AWSSDK.Extensions.CognitoAuthentication" Version="0.9.4" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.104.4" />
+    <PackageReference Include="Boxed.AspNetCore" Version="3.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     <PackageReference Include="NLog" Version="4.6.3" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.2" />
+    <PackageReference Include="RestSharp" Version="106.6.10" />
     <PackageReference Include="VueCliMiddleware" Version="2.2.0" />
   </ItemGroup>
 
@@ -62,7 +68,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models" />
+    <ProjectReference Include="..\..\Laklp.Platform.Data\Laklp.Platform.Data.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

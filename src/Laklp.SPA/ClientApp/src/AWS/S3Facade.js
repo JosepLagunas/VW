@@ -2,9 +2,12 @@ let AWS = require('aws-sdk');
 let bucket = 'webplatform-documents';
 
 let S3Facade = {
-    uploadFile: (folder, fileName, content, notifyProgressCallback) => {
+    uploadResourceFile: (folderPath, fileName, content, notifyProgressCallback) => {
         let file = content;
-        let folderKey = encodeURIComponent(folder) + '/';
+        if (!!folderPath && folderPath.startsWith('/')){
+            folderPath = folderPath.slice(1);
+        }
+        let folderKey = `${folderPath}/`;
 
         let key = folderKey + fileName;
 
