@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Laklp.Platform.Data;
 using Laklp.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,39 +11,39 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using VueCliMiddleware;
+using AutoMapper;
+using Laklp.Config;
 
 namespace Laklp
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var domain = Configuration["Authentication:Auth0:Config:Domain"];
-            var clientId = Configuration["Authentication:Auth0:Config:ClientId"];
-            var clientSecret = Configuration["Authentication:Auth0:Config:ClientSecret"];
-
-            services.AddAuth0Authentication(domain, clientId, clientSecret);
+            services.AddAuth0Authentication(Configuration);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddLaklpPlatformServices(Configuration);
+            
+            var connectionString = Configuration["Data:ConnectionString"];
+            services.AddLaklpPlatformDataAccess(connectionString);
 
             services.AddHttpContextAccessor();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory loggerFactory)
         {
@@ -54,7 +56,7 @@ namespace Laklp
 
                 return next();
             });
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -133,7 +135,7 @@ namespace Laklp
             if (!requestPath.HasValue) return true;
             if (ValidPaths.Contains(requestPath.Value)) return false;
             var splitUrl = requestPath.Value.Split("/");
-                                       
+
             var firstPathPart = $"/{splitUrl[1].ToLower()}";
             return !ValidPaths.Contains(firstPathPart);
         }

@@ -4,14 +4,16 @@ using Laklp.Platform.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Laklp.Platform.Data.Migrations
 {
     [DbContext(typeof(LaklpDbContext))]
-    partial class LaklpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190805015700_UrlRemovedFromResourceEntity")]
+    partial class UrlRemovedFromResourceEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

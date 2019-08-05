@@ -53,6 +53,7 @@
     import VTextField from "vuetify/lib/components/VTextField/VTextField";
     import {S3Facade} from "../AWS/S3Facade";
 
+
     export default {
         components: {FileSelector, VTextField},
         data: () => {
@@ -80,18 +81,29 @@
             },
             uploadFiles() {
                 this.uploadingFiles = true;
-                this.files.forEach(f => {
-                    let file = f.file;
-                    let name = file.fileName;
-                    let content = file.fileContent;
-                    f.uploader.uploadReady = true;
-                    S3Facade.uploadFile('documents', name, content, function (uploader) {
-                        return function (progressData) {
-                            f.uploader.uploadProgress = progressData;
-                        }
-                    }(f.uploader));
-                });
+                this.files.forEach(f => this.uploadFile(f));
                 this.uploadingFiles = false;
+            },
+            uploadFile(f, enabled) {
+                f.uploader.uploadReady = true;
+                let extension = this.getFileExtension(f.file);
+                let self = this;
+                this.axios.post(`/resources?extension=${extension}&enabled=${!!enabled}`)
+                    .then(response => {
+
+                        let folderPath = response.data.s3Path;
+                        let name = response.data.s3Key;
+                        let content = f.file.fileContent;
+                        S3Facade.uploadResourceFile(folderPath, name, content, function (uploader) {
+                            return function (progressData) {
+                                f.uploader.uploadProgress = progressData;
+                            }
+                        }(f.uploader));
+                    });
+            },
+            getFileExtension(f) {
+                let fileName = f.fileName;
+                return fileName.includes('.') ? `.${fileName.split('.').pop()}` : '';
             },
             handleFileSelected(e) {
                 this.dataForCurrentSelectedFile.file = e.data;
@@ -137,7 +149,6 @@
                 if (!this.$refs.uploadButtonsContainer) return 0;
                 return this.$refs.uploadButtonsContainer.childElementCount;
             }
-
         }
     }
 
@@ -155,8 +166,8 @@
         border: solid 1px;
         margin: auto;
     }
-    
-    .create-content-btn{
+
+    .create-content-btn {
         position: fixed;
         bottom: 10%;
         right: 5%;

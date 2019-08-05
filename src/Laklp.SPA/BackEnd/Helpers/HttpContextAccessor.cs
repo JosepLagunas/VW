@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Laklp.Helpers
 {
-    public class HttpContextAccessor
+    internal class HttpContextAccessor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 

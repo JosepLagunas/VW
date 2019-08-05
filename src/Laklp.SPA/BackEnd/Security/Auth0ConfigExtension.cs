@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Laklp.Security
@@ -12,8 +13,12 @@ namespace Laklp.Security
     public static class Auth0ConfigExtension
     {
         public static IServiceCollection AddAuth0Authentication(this IServiceCollection services,
-            string domain, string clientId, string clientSecret)
+            IConfiguration configuration)
         {
+            var domain = configuration["Authentication:Auth0:Config:Domain"];
+            var clientId = configuration["Authentication:Auth0:Config:ClientId"];
+            var clientSecret = configuration["Authentication:Auth0:Config:ClientSecret"];
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
