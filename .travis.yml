@@ -12,9 +12,9 @@ before_install:
 - pip install awscli
 - export PATH=$PATH:$HOME/.local/bin
 script:
-- cd ./src/VW.SPA
+- cd ./src/Laklp.SPA/BackEnd
 - docker build -t $DOCKER_REPO .
-- cd ../..
+- cd ../../..
 - bash docker_push.sh
 deploy:
   - provider: script
